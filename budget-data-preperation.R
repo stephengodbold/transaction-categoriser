@@ -8,7 +8,7 @@ loadData <- function() {
   rawData['source'] <- rawData['ï..source.account']
   rawData['effective'] <- rawData['effective.date']
   rawData['entered'] <- rawData['entered.date']
-  rawData['TxId'] <- 1:nrow(rawData)
+  rawData['transactionId'] <- 1:nrow(rawData)
   
   rawData['ï..source.account'] <- NULL
   rawData['effective.date'] <- NULL
@@ -30,8 +30,8 @@ categoriseData <- function(data) {
                          ignore_case=T, 
                          method='jw', 
                          distance_col='distance') %>%
-    group_by(TxId) %>% 
-    slice(which.min(dist))
+    group_by(transactionId) %>% 
+    slice(which.min(distance))
   
   return(matchedData)
 }
