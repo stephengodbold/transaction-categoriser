@@ -29,7 +29,7 @@ categoriseData <- function(data) {
     stringdist_inner_join(categoryLabels, by=c(description='name'), 
                          ignore_case=T, 
                          method='jw', 
-                         distance_col='dist') %>%
+                         distance_col='distance') %>%
     group_by(TxId) %>% 
     slice(which.min(dist))
   
