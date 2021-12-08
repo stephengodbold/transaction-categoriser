@@ -39,5 +39,4 @@ categoriseData <- function(data) {
 budgetData <- loadData()
 budgetData <- categoriseData(budgetData)
 
-head(budgetData)
-summary(budgetData)
+write.csv(budgetData, here('budget-manager', 'data', 'categorised-transactions.csv'))
