@@ -15,4 +15,7 @@ Bank Australia is awesome, but they aren't quite there when it comes to the data
 
 You'll need to review and tune your categorisation inputs as the file takes the 'best' match. I have a soft distance threshold of 0.4 - anything over that has proven to be a poor selection in the model I use for category searching. 
 
-I may introduce a more direct threshold value and default everything over that set value to "uncategorised" to allow you to tune more effectively.
+
+## Things I'm thinking about
+
+I may introduce a more direct threshold value and default everything over that set value to "uncategorised" to allow you to tune more effectively. If you've got other thoughts, pop them in as an issue or submit a PR! 
