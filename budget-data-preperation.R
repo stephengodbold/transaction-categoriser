@@ -5,18 +5,29 @@ library(fuzzyjoin)
 loadData <- function() {
   rawData <- read.csv(here('budget-manager','data', 'transactions.csv'))
   
-  #cleaning column names
-  rawData['source'] <- rawData['ï..source.account']
-  rawData['effective'] <- rawData['effective.date']
-  rawData['entered'] <- rawData['entered.date']
+  #cleaning up my augmented column name
+  if ('ï..Source' %in% colnames(rawData)) {
+    rawData['source'] <- rawData['ï..Source']
+    rawData['ï..Source'] <- NULL
+  }
   
-  rawData['ï..source.account'] <- NULL
-  rawData['effective.date'] <- NULL
-  rawData['entered.date'] <- NULL
+  #simplifying default column names
+  if ('ï..Effective.Date' %in% colnames(rawData)) {
+    rawData['effective'] <- rawData['ï..Effective.Date']  
+    rawData['ï..Effective.Date'] <- NULL
+  } else {
+    rawData['effective'] <- rawData['Effective.Date'] 
+    rawData['Effective.Date'] <- NULL  
+  }
+  
+  rawData['entered'] <- rawData['Entered.Date']
+  rawData['description'] <- rawData['Transaction.Description']
+  
+  rawData['Entered.Date'] <- NULL
+  rawData['Transaction.Description'] <- NULL
   
   #adding a transaction Id to enable slicing
   rawData['transactionId'] <- 1:nrow(rawData)
-  
   
   return(rawData)
 }
