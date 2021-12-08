@@ -36,12 +36,12 @@ loadData <- function() {
 #and return the closest match for each description
 categoriseData <- function(data) {
   categoryLabels <- read.csv(here('budget-manager','data', 'category-labels.csv'))
-  categoryLabels$name <- categoryLabels$ï..Name
-  categoryLabels$ï..Name <- NULL
+  categoryLabels$searchValue <- categoryLabels$ï..searchValue
+  categoryLabels$ï..searchValue <- NULL
   
   
   matchedData <- data %>% 
-    stringdist_inner_join(categoryLabels, by=c(description='name'), 
+    stringdist_inner_join(categoryLabels, by=c(description='searchValue'), 
                          ignore_case=T, 
                          method='jw', 
                          distance_col='distance') %>%
