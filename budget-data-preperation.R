@@ -1,12 +1,14 @@
+library(here)
 library(dplyr)
 library(fuzzyjoin)
 
 loadData <- function() {
-  rawData <- read.csv('C:\\Users\\steph\\OneDrive\\Budget\\data\\transactions.csv')
+  rawData <- read.csv(here('budget-manager','data', 'transactions.csv'))
   
   rawData['source'] <- rawData['ï..source.account']
   rawData['effective'] <- rawData['effective.date']
   rawData['entered'] <- rawData['entered.date']
+  rawData['TxId'] <- 1:nrow(rawData)
   
   rawData['ï..source.account'] <- NULL
   rawData['effective.date'] <- NULL
@@ -15,27 +17,21 @@ loadData <- function() {
   return(rawData)
 }
 
+#load your category data, then intersect categories with transactions 
+#and return the closest match for each description
 categoriseData <- function(data) {
-  categoryLabels <- read.csv('C:\\Users\\steph\\OneDrive\\Budget\\data\\category-labels.csv')
+  categoryLabels <- read.csv(here('budget-manager','data', 'category-labels.csv'))
   categoryLabels$name <- categoryLabels$ï..Name
   categoryLabels$ï..Name <- NULL
   
-  data['L1Category'] <- 'Other'
   
-  #doesn't work, but is a start
   matchedData <- data %>% 
-    stringdist_left_join(categoryLabels, by=c(description='name'), 
+    stringdist_inner_join(categoryLabels, by=c(description='name'), 
                          ignore_case=T, 
                          method='jw', 
-                         distance_col='dist')
-
-
-  
-
-  #groceries
-  #contains(data$description
-    
-  data$L1Category <- as.factor(data$L1Category)
+                         distance_col='dist') %>%
+    group_by(TxId) %>% 
+    slice(which.min(dist))
   
   return(matchedData)
 }
