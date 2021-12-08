@@ -5,14 +5,18 @@ library(fuzzyjoin)
 loadData <- function() {
   rawData <- read.csv(here('budget-manager','data', 'transactions.csv'))
   
+  #cleaning column names
   rawData['source'] <- rawData['ï..source.account']
   rawData['effective'] <- rawData['effective.date']
   rawData['entered'] <- rawData['entered.date']
-  rawData['transactionId'] <- 1:nrow(rawData)
   
   rawData['ï..source.account'] <- NULL
   rawData['effective.date'] <- NULL
   rawData['entered.date'] <- NULL
+  
+  #adding a transaction Id to enable slicing
+  rawData['transactionId'] <- 1:nrow(rawData)
+  
   
   return(rawData)
 }
@@ -38,5 +42,4 @@ categoriseData <- function(data) {
 
 budgetData <- loadData()
 budgetData <- categoriseData(budgetData)
-
 write.csv(budgetData, here('budget-manager', 'data', 'categorised-transactions.csv'))
