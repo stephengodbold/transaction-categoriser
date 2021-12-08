@@ -1,3 +1,19 @@
+
+#taken from https://vbaliga.github.io/verify-that-r-packages-are-installed-and-loaded/
+checkAndInstallPackages <- function(requiredPackages) {
+  package.check <- lapply(
+    requiredPackages,
+    FUN = function(x) {
+      if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE)
+        library(x, character.only = TRUE)
+      }
+    }
+  )
+}
+
+checkAndInstallPackages(c('here', 'dplyr', 'fuzzyjoin'))
+
 library(here)
 library(dplyr)
 library(fuzzyjoin)
