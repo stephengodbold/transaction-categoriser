@@ -1,6 +1,6 @@
 # Transaction Categoriser
 
-Bank Australia is awesome, but they aren't quite there when it comes to the data they provide to manage your budget. So, to help manage the home budget I hacked together this R script that takes a category file and performs a fuzzy string match on transaction description to your category search criteria and returns the best result as a category. 
+Bank Australia is awesome, but they aren't quite there when it comes to the data they provide to manage your budget. So, to help manage the home budget I hacked together this R script that takes a category file and performs a fuzzy string match on transaction description to your category search criteria and returns the best result as a category. It's a simple cobbling together of libraries that uses Jaro-Winkler distance for matching, then outputs the best category match data appended to the original transaction into the data directory for further use. 
 
 ## How to
 
